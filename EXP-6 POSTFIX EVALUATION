@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define size 25
+char post[25];
+char stack[size];
+int Top=-1;
+
+
+int eval();
+int pop();
+void push(int);
+
+
+int main(){
+    printf("Enter the Postfix expression:");
+    scanf("%s",post);
+    printf("%d",eval());
+}
+
+int eval(){
+    int val;
+    for (int i=0;post[i]!='\0';i++)
+    {
+        if (post[i]>='a' && post[i]<='z')
+        {
+            printf("Enter the value of %c:",post[i]);
+            scanf("%d",&val);
+            push(val);
+        }
+        else{
+            int x,y;
+            x=pop();
+            y=pop();
+            switch (post[i]){
+                case '+':
+                push(y+x);
+                break;
+                case '-':
+                push(y-x);
+                break;
+                case '*':
+                push(y*x);
+                break;
+                case '/':
+                push(y/x);
+                break;
+                case '^':
+                push(y^x);
+                break;
+            }
+        }
+    }
+    return pop();
+}
+
+void push(int data)
+{
+    Top=Top+1;
+    stack[Top]=data;
+}
+
+int pop()
+{
+    int temp=stack[Top];
+    Top=Top-1;
+    return temp;
+}

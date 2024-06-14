@@ -1,0 +1,48 @@
+#include <stdio.h>
+#define SIZE 7
+int arr[SIZE] = {99, 0, 12, 58, 69, 77, 2};
+void mer(int arr[], int left, int centre, int right) {
+int n1 = centre - left + 1;
+int n2 = right - centre;
+int a[n1], b[n2];
+for (int i = 0; i < n1; i++)
+a[i] = arr[left + i];
+for (int j = 0; j < n2; j++)
+b[j] = arr[centre + 1 + j];
+int aptr = 0, bptr = 0, cptr = left;
+while (aptr < n1 && bptr < n2) {
+if (a[aptr] <= b[bptr]) {
+arr[cptr] = a[aptr];
+aptr++;
+} else {
+arr[cptr] = b[bptr];
+bptr++;
+}
+cptr++;
+}
+while (aptr < n1) {
+arr[cptr] = a[aptr];
+aptr++;
+cptr++;
+}
+while (bptr < n2) {
+arr[cptr] = b[bptr];
+bptr++;
+cptr++;
+}
+}
+void merge(int arr[], int left, int right) {
+if (left < right) {
+int centre = (left+right) / 2;
+merge(arr, left, centre);
+merge(arr, centre + 1, right);
+mer(arr, left, centre, right);
+}
+}
+int main() {
+merge(arr, 0, SIZE - 1);
+for (int i = 0; i < SIZE; i++) {
+printf("%d ", arr[i]);
+}
+return 0;
+}
